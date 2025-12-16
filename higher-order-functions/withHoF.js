@@ -1,3 +1,10 @@
+/**
+A higher-order function is a function that:
+    takes another function as an argument, or
+    returns a function
+In short: functions that work with functions.
+*/
+
 const radius = [3, 5, 8];
 
 const area = (rad) => Math.PI * rad * rad;

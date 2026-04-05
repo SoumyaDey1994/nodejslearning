@@ -1,3 +1,8 @@
+/**
+ * Promise.all([...]): Waits for all promises in list to get fulfilled(success)
+ * If any 1 fails, it doesn't wait for other promises to return
+ * If terminates the execution immediately in that case
+ */
 Promise.prototype.myAll = (pr) => {
   return new Promise((resolve, reject) => {
     if (!pr) resolve();
@@ -18,6 +23,11 @@ Promise.prototype.myAll = (pr) => {
     });
   });
 };
+/**
+ * Promise.allSettled([...]): Waits for all promies to get settled(either fulfilled or rejected)
+ * If 1 or more fails, till it waits for remaining promises get completed
+ * and returns a Grregated response [{status:..., value/reason: ...}]
+ */
 
 Promise.prototype.myAllSettled = (pr) => {
   return new Promise((resolve, reject) => {
@@ -51,15 +61,31 @@ Promise.prototype.myAllSettled = (pr) => {
     });
   });
 };
+/**
+ * Promise.race([...]): Just waits for 1 promise to get Settled (fulfill/rejected)
+ * As soon as 1 promise gets settled, it returns the response & exists
+ */
 
 Promise.prototype.myRace = (pr) => {
   return new Promise((resolve, reject) => {
+    if (!pr) resolve();
+    if (pr.length === 0) resolve([]);
     pr.forEach((pm) => Promise.resolve(pm).then(resolve).catch(reject));
   });
 };
 
+/**
+ * Promise.any([...]): Waits for 1 promise to get fulfilled
+ * Even when there are errors, it waits for first success
+ * If all promises gets rejected, then it returns an AggregateError: All promise were rejecetd
+ * which consists list of all rejecetd promise errors
+ */
+
 Promise.prototype.myAny = (pr) => {
   return new Promise((resolve, reject) => {
+    if (!pr) resolve();
+    if (pr.length === 0) resolve();
+
     const errorResults = [];
     pr.forEach((pm, index) => {
       Promise.resolve(pm)

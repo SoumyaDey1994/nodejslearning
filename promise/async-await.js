@@ -12,11 +12,13 @@
  * If subsequent promises gets rejected, then it will be treated as UnhandledPromiseRejection by JS env
  */
 const p1 = new Promise((resolve, reject) => {
-  setTimeout(() => resolve("P1 resolved"), 30000);
+  console.log(`Promise 1: getting resolved in 10 sec`);
+  setTimeout(() => resolve("P1 resolved"), 10000);
   // setTimeout(() => reject('P1 rejected'), 5000);
 });
 
 const p2 = new Promise((resolve, reject) => {
+  console.log(`Promise 2: getting resolved in 20 sec`);
   setTimeout(() => resolve("P2 resolved"), 20000);
   // setTimeout(() => reject("P2 rejected"), 10000);
 });
